@@ -55,3 +55,24 @@ La función no requiere parámetros de entrada y retorna obligatoriamente un **O
 * `telefono`: Tipo String (ejemplo: "987654321")
 * `email`: Tipo String (ejemplo: "juan.perez@email.com")
 * `codigo`: Tipo String (ejemplo: "000JUA3456")
+
+## 4. Procesamiento Funcional de Arreglos
+**Responsable:** Sara
+
+### Objetivo del Módulo
+Recibir los ítems del carrito procesados por el Integrante 3 y aplicar un enfoque declarativo para extraer estadísticas y dar formato final a la información, utilizando exclusivamente métodos de orden superior y arrow functions.
+
+### Responsabilidades Técnicas
+* Reemplazar las funciones tradicionales por el operador flecha (`=>`) en todos los callbacks del módulo.
+* Emplear `map()` para transformar el arreglo de ítems del carrito en un arreglo de cadenas formateadas para la boleta.
+* Utilizar `filter()` para extraer los productos cuyo subtotal supere S/ 30.00 (productos destacados).
+* Aplicar `reduce()` para acumular la cantidad total de artículos comprados.
+* Usar `forEach()` para recorrer los productos destacados y construir una cadena con sus nombres.
+
+### Contrato de Datos (Entradas y Salidas)
+**Entrada:** Arreglo de ítems del carrito, cada uno con `producto`, `cantidad`, `precioUnitario` y `subtotalItem`.
+
+**Salida:** Objeto Literal con:
+* `reciboEstructurado`: Array de Strings (líneas formateadas).
+* `cantidadCalculada`: Number (total de artículos).
+* `destacados`: String (nombres de productos destacados separados por guion).
