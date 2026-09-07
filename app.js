@@ -147,13 +147,13 @@ function procesarCarrito(menu) {
                             subtotalItem: subtotalItem
                         });
 
-                        alert("¡Producto agregar con exito!");
+                        alert("¡Producto agregar con éxito!");
                     } else {
-                        alert("ERROR: Ingrese un valor númerico valido mayor a 0.");
+                        alert("ERROR: Ingrese un valor númerico válido mayor a 0.");
                     }
                 }
             } else {
-                alert("ERROR: No se a encontrado ningun producto con el ID ingresado.");
+                alert("ERROR: No se ha encontrado ningún producto con el ID ingresado.");
             }
         }
 
