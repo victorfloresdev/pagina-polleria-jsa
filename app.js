@@ -101,3 +101,81 @@ return {
         codigo: codigoFinal
     };
 }
+
+function procesarCarrito(menu) {
+    let items = [];
+    let subtotalAcumulado = 0;
+    let cantidadTotalArticulos = 0;
+    let continuarComprando = true;
+
+    do {
+        let menuTexto = "--- MENÚ DE LA POLLERÍA --- \n";
+        for (let  i = 0; i < menu.length; i++) {
+            menuTexto += "ID: " + menu[i].id + " | " + menu[i].nombre + " -S/ " + menu[i].precio.toFixed(2) + "\n";
+        }
+        menuTexto += "\nIngrese el ID del producto que desea agregar:";
+
+        let inputId = prompt(menuTexto);
+
+        if(inputId !== null && inputId.trim() !== "") {
+            let idSeleccionado = Number(inputId.trim());
+            let productoEncontrado = null;
+
+            for (let i = 0; i < menu.length; i++){
+                if (menu[i].id === idSeleccionado) {
+                    productoEncontrado = menu[i];
+                    break;
+                }
+            }
+
+            if ( productoEncontrado !== null) {
+                let inputCantidad = prompt("Ingresa la cantidad para " + productoEncontrado.nombre + " :");
+
+                if (inputCantidad !== null && inputCantidad.trim() !== "") {
+                    let cantidad = Number(inputCantidad.trim());
+
+                    if (!isNaN(cantidad) && cantidad > 0) {
+                        let subtotalItem = productoEncontrado.precio * cantidad;
+
+                        cantidadTotalArticulos += cantidad;
+                        subtotalAcumulado += subtotalItem;
+
+                        items.push({
+                            producto: productoEncontrado.nombre,
+                            cantidad: cantidad,
+                            precioUnitario: productoEncontrado.precio,
+                            subtotalItem: subtotalItem
+                        });
+
+                        alert("¡Producto agregar con exito!");
+                    } else {
+                        alert("ERROR: Ingrese un valor númerico valido mayor a 0.");
+                    }
+                }
+            } else {
+                alert("ERROR: No se a encontrado ningun producto con el ID ingresado.");
+            }
+        }
+
+
+        continuarComprando  = confirm("¿Desea agregar otro producto al carrito?");
+    }while (continuarComprando);
+
+    let subtotal = Math.round((subtotalAcumulado + Number.EPSILON) * 100) /100;
+    let igv = Math.round(((subtotal * 0.18) + Number.EPSILON) * 100)/100;
+
+    let descuento = 0;
+    if(cantidadTotalArticulos % 2 === 0 && cantidadTotalArticulos > 0 ){
+        descuento = 5.00;
+    }
+
+    let totalFijo = Math.round(((subtotal + igv - descuento) + Number.EPSILON) * 100 ) /100;
+
+    return {
+        items: items,
+        subtotal: subtotal,
+        igv: igv,
+        descuento: descuento,
+        totalFijo: totalFijo
+    };
+}
