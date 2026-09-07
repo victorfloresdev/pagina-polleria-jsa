@@ -56,6 +56,28 @@ La función no requiere parámetros de entrada y retorna obligatoriamente un **O
 * `email`: Tipo String (ejemplo: "juan.perez@email.com")
 * `codigo`: Tipo String (ejemplo: "000JUA3456")
 
+## 3. Gestión del carrito de compras y pedido.
+**Responsable:** Sandro Gomez.
+
+### Objetivo del Módulo:
+Diseñar e implementar la lógica central del carrito de compras interactivo, actuando como el motor transaccional del sistema. Este módulo tiene como propósito recibir la selección de productos realizada por el cliente desde el catálogo digital, verificar de forma estricta la disponibilidad de existencia en el inventario antes de autorizar cualquier adición o modificación, procesar dinámicamente los cambios de unidades o la eliminación de ítems, y ejecutar los cálculos financieros requeridos.
+
+### Responsabilidades técnicas:
+**Adición y Validación de Productos:** Desarrollar la función `agregarAlCarrito()` para incorporar ítems seleccionados, validando previamente su existencia en el menú y la disponibilidad suficiente en el inventario.
+**Control de Stock en Tiempo Real:** Consultar la estructura `inventario` antes de modificar cantidades para evitar ventas por encima de la capacidad de stock.
+**Gestión Dinámica de Cantidades:** Permitir al usuario incrementar, reducir unidades o eliminar ítems específicos del carrito mediante funciones auxiliares.
+**Cálculo Financiero de la Compra:** Computar de manera precisa los subtotales individuales (`cantidad * precioUnitario`) y el monto total acumulado del pedido.
+**Actualización de Inventario:** Descontar las unidades confirmadas en la colección `inventario` una vez concretada la transacción.
+**Estructuración para Módulos Postergados:** Entregar el arreglo normalizado de ítems comprados al Módulo 4 para la extracción de estadísticas y generación de recibos.
+
+### Contrato de Datos (Entradas y Salidas)
+* **Entrada:** `menuPrincipal` *(Array)*, `inventario` *(Map/Objeto)*, `idProducto` *(Number)* y `cantidad` *(Number)*.
+* **Salida:** Arreglo de Objetos con la estructura por ítem:
+  - `producto`: String (ejemplo: "1/4 de Pollo a la Brasa")
+  - `cantidad`: Number (ejemplo: 2)
+  - `precioUnitario`: Number (ejemplo: 22.00)
+  - `subtotalItem`: Number (ejemplo: 44.00)
+
 ## 4. Procesamiento Funcional de Arreglos
 **Responsable:** Sara
 
