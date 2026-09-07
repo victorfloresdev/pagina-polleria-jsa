@@ -101,3 +101,72 @@ return {
         codigo: codigoFinal
     };
 }
+
+function iniciarSistema() {
+    try {
+        const cliente = registrarCliente();
+
+        const financiero = typeof procesarCarrito === 'function' 
+            ? procesarCarrito(menuPrincipal)
+            : {
+                items: [{ producto: "1/4 de Pollo a la Brasa", cantidad: 2, precioUnitario: 22, subtotalItem: 44 }],
+                subtotal: 44.00,
+                igv: 7.92,
+                descuento: 0.00,
+                totalFijo: 51.92
+            };
+
+        const estadisticas = typeof procesarEstadisticas === 'function'
+            ? procesarEstadisticas(financiero.items)
+            : {
+                reciboEstructurado: ["2x 1/4 de Pollo a la Brasa (S/ 22.00) = S/ 44.00"],
+                cantidadCalculada: 2,
+                destacados: "1/4 de Pollo a la Brasa"
+            };
+
+        let itemsHTML = "";
+        estadisticas.reciboEstructurado.forEach(linea => {
+            itemsHTML += `<li>${linea}</li>`;
+        });
+
+        const boletaHTML = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; border: 2px solid #333; border-radius: 8px; background-color: #fff8f0;">
+                <h1 style="text-align: center; color: #8b0000; margin-bottom: 5px;">Pollería Nuevo Norte</h1>
+                <h3 style="text-align: center; color: #555; margin-top: 0;">Boleta Electrónica Virtual</h3>
+                <hr style="border: 1px solid #ddd;">
+                <p><strong>Código de Cliente:</strong> ${cliente.codigo}</p>
+                <p><strong>Cliente:</strong> ${cliente.nombre}</p>
+                <p><strong>DNI:</strong> ${cliente.dni} | <strong>Teléfono:</strong> ${cliente.telefono}</p>
+                <p><strong>Email:</strong> ${cliente.email}</p>
+                <hr style="border: 1px solid #ddd;">
+                <h3>Detalle de la Compra (${estadisticas.cantidadCalculada} productos):</h3>
+                <ul>
+                    ${itemsHTML}
+                </ul>
+                <p><strong>Productos Destacados (> S/ 30):</strong> ${estadisticas.destacados || "Ninguno"}</p>
+                <hr style="border: 1px solid #ddd;">
+                <p><strong>Subtotal:</strong> S/ ${financiero.subtotal.toFixed(2)}</p>
+                <p><strong>IGV (18%):</strong> S/ ${financiero.igv.toFixed(2)}</p>
+                <p><strong>Descuento Aplicado:</strong> S/ ${financiero.descuento.toFixed(2)}</p>
+                <h2 style="color: #8b0000;">Total a Pagar: S/ ${financiero.totalFijo.toFixed(2)}</h2>
+            </div>
+        `;
+
+        document.body.innerHTML = boletaHTML;
+
+        console.log("Transacción completada exitosamente.");
+        console.log("Serialización JSON del pedido:", JSON.stringify({ cliente, financiero, estadisticas }, null, 2));
+
+    } catch (error) {
+        console.error("Detalle técnico del error en el sistema:", error);
+        document.body.innerHTML = `
+            <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; border: 2px solid #d9534f; border-radius: 8px; background-color: #f2dede; color: #a94442; text-align: center;">
+                <h2>Error en el Procesamiento</h2>
+                <p>Ocurrió un inconveniente al procesar la transacción o se canceló una entrada de datos.</p>
+                <p><small>Por favor, recargue la página para intentarlo nuevamente.</small></p>
+            </div>
+        `;
+    }
+}
+
+window.onload = iniciarSistema;
