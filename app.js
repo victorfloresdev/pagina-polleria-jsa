@@ -180,6 +180,39 @@ function procesarCarrito(menu) {
     };
 }
 
+const procesarEstadisticas = (carritoItems) => {
+    
+    const reciboEstructurado = carritoItems.map((item) => {
+        let precioTexto = item.precioUnitario.toFixed(2);
+        let subtotalTexto = item.subtotalItem.toFixed(2);
+        let linea = item.cantidad + "x " + item.producto + " (S/ " + precioTexto + ") = S/ " + subtotalTexto;
+        return linea;
+    });
+
+    const cantidadCalculada = carritoItems.reduce((total, item) => {
+        return total + item.cantidad;
+    }, 0);
+
+    const destacados = carritoItems.filter((item) => {
+        return item.subtotalItem > 30;
+    });
+
+    let destacadosTexto = "";
+    destacados.forEach((item) => {
+        destacadosTexto = destacadosTexto + item.producto + " - ";
+    });
+
+    if (destacadosTexto.length > 0) {
+        destacadosTexto = destacadosTexto.slice(0, -3);
+    }
+
+    return {
+        reciboEstructurado: reciboEstructurado,
+        cantidadCalculada: cantidadCalculada,
+        destacados: destacadosTexto
+    };
+};
+
 function iniciarSistema() {
     try {
         const cliente = registrarCliente();
