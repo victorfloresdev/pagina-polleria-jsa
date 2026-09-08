@@ -1,7 +1,7 @@
 ﻿# pagina-polleria-jsa
 ## 1. Gestión de Datos y Estructuras
 
-**Responsable:** Víctor Flores
+**Responsable:** Flores Paredes Víctor Andrés
 
 ### Objetivo del Módulo
 Construir la base de datos simulada del sistema utilizando programación orientada a objetos, colecciones especializadas y notación JSON. Este módulo actúa como el generador de los datos iniciales que el resto de los módulos consumirá.
@@ -36,11 +36,11 @@ Este módulo no recibe parámetros de entrada. Su responsabilidad es exportar la
 
 ## 2. Validación y Manipulación de Cadenas
 
-Responsable: Axel Rabanal 
-Objetivo del Módulo: 
+**Responsable:** Rabanal Arévalo Axel Zayed 
+### Objetivo del Módulo:
 Gestionar la interacción inicial con el cliente capturando sus datos personales mediante ventanas emergentes (`prompt()`), aplicando transformaciones de texto y garantizando la integridad de la información mediante validaciones estrictas con expresiones regulares antes de permitir el inicio del pedido.
 
-Responsabilidades Técnicas:
+### Responsabilidades Técnicas:
 * Diseñar la función principal `registrarCliente()` controlando el flujo mediante bucles `while` y variables de estado (booleanos invertidos tipo `!esValido`) para prevenir bloqueos de memoria y evitar el uso de bucles infinitos.
 * Aplicar los métodos `trim()` para limpieza de espacios y `toUpperCase()` para estandarizar cadenas.
 * Validar el formato del DNI utilizando el método `test()` y la expresión regular `/^\d{8}$/`.
@@ -57,7 +57,7 @@ La función no requiere parámetros de entrada y retorna obligatoriamente un **O
 * `codigo`: Tipo String (ejemplo: "000JUA3456")
 
 ## 3. Gestión del carrito de compras y pedido.
-**Responsable:** Sandro Gomez.
+**Responsable:** Gómez Moran Sandro del Piero
 
 ### Objetivo del Módulo:
 Diseñar e implementar la lógica central del carrito de compras interactivo, actuando como el motor transaccional del sistema. Este módulo tiene como propósito recibir la selección de productos realizada por el cliente desde el catálogo digital, verificar de forma estricta la disponibilidad de existencia en el inventario antes de autorizar cualquier adición o modificación, procesar dinámicamente los cambios de unidades o la eliminación de ítems, y ejecutar los cálculos financieros requeridos.
@@ -79,7 +79,7 @@ Diseñar e implementar la lógica central del carrito de compras interactivo, ac
   - `subtotalItem`: Number (ejemplo: 44.00)
 
 ## 4. Procesamiento Funcional de Arreglos
-**Responsable:** Sara
+**Responsable:** Yovera Chero Sara Jazmin
 
 ### Objetivo del Módulo
 Recibir los ítems del carrito procesados por el Integrante 3 y aplicar un enfoque declarativo para extraer estadísticas y dar formato final a la información, utilizando exclusivamente métodos de orden superior y arrow functions.
@@ -100,7 +100,7 @@ Recibir los ítems del carrito procesados por el Integrante 3 y aplicar un enfoq
 * `destacados`: String (nombres de productos destacados separados por guion).
 
 ## 5. Integración del Sistema y Presentación en el DOM
-**Responsable:** Diogo Alvarez
+**Responsable:** Alvarez Roa Diogo Alfonso
 
 ### Objetivo del Módulo:
 Actuar como el orquestador principal del sistema, encargándose de coordinar la ejecución secuencial de todos los módulos anteriores, gestionar el control de errores durante el flujo transaccional e inyectar dinámicamente la interfaz gráfica de la boleta virtual en el documento HTML.
