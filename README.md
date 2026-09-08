@@ -98,3 +98,21 @@ Recibir los ítems del carrito procesados por el Integrante 3 y aplicar un enfoq
 * `reciboEstructurado`: Array de Strings (líneas formateadas).
 * `cantidadCalculada`: Number (total de artículos).
 * `destacados`: String (nombres de productos destacados separados por guion).
+
+## 5. Integración del Sistema y Presentación en el DOM
+**Responsable:** Diogo Alvarez
+
+### Objetivo del Módulo:
+Actuar como el orquestador principal del sistema, encargándose de coordinar la ejecución secuencial de todos los módulos anteriores, gestionar el control de errores durante el flujo transaccional e inyectar dinámicamente la interfaz gráfica de la boleta virtual en el documento HTML.
+
+### Responsabilidades técnicas:
+* Orquestación del Flujo:** Diseñar la función principal `iniciarSistema()` como el punto de entrada unificado, coordinando el flujo al llamar consecutivamente a `registrarCliente()`, `procesarCarrito()` y `procesarEstadisticas()`.
+* Manejo de Errores Robustos:** Implementar una estructura de control `try...catch` para capturar cualquier interrupción o excepción durante la recolección de datos o cálculos.
+* Construcción Dinámica de la Interfaz:** Utilizar plantillas literales (template strings) para construir la boleta electrónica estructurada con código HTML y estilos CSS embebidos.
+* Renderizado en el DOM:** Modificar la propiedad `document.body.innerHTML` para inyectar y visualizar el resultado final directamente en la pantalla del navegador.
+* Registro e Inspección en Consola:** Registrar el estado del proceso y la salida serializada en formato JSON en la consola del desarrollador mediante `console.log()` y `console.error()`.
+**Ejecución Automática:** Vincular el arranque del sistema al evento de carga inicial de la ventana mediante `window.onload`.
+
+### Contrato de Datos (Entradas y Salidas)
+* **Entrada:** `cliente` *(Objeto)*, `financiero` *(Objeto)* y `estadisticas` *(Objeto)*.
+* **Salida:** Inyección directa en el DOM de la boleta virtual e impresión en consola del JSON serializado.

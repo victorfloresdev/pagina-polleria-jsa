@@ -41,7 +41,7 @@ function registrarCliente() {
     let telefono = "";
     let email = "";
 
-let nombreValido = false;
+    let nombreValido = false;
     while (!nombreValido) { 
         let inputNombre = prompt("Ingrese su nombre completo:");
         if (inputNombre && inputNombre.trim().length > 0) {
@@ -52,7 +52,7 @@ let nombreValido = false;
         }
     }
 
-const regexDni = /^\d{8}$/;
+    const regexDni = /^\d{8}$/;
     let dniValido = false;
     while (!dniValido) {
         let inputDni = prompt("Ingrese su número de DNI (8 dígitos):");
@@ -64,7 +64,7 @@ const regexDni = /^\d{8}$/;
         }
     }
 
-const regexTel = /^9\d{8}$/;
+    const regexTel = /^9\d{8}$/;
     let telValido = false;
     while (!telValido) {
         let inputTel = prompt("Ingrese su número de celular (debe empezar con 9 y tener 9 dígitos):");
@@ -93,7 +93,7 @@ const regexTel = /^9\d{8}$/;
     let codigoBase = letrasNombre + digitosDni;
     let codigoFinal = codigoBase.padStart(10, "0");
 
-return {
+    return {
         nombre: nombre,
         dni: dni,
         telefono: telefono,
@@ -110,25 +110,25 @@ function procesarCarrito(menu) {
 
     do {
         let menuTexto = "--- MENÚ DE LA POLLERÍA --- \n";
-        for (let  i = 0; i < menu.length; i++) {
-            menuTexto += "ID: " + menu[i].id + " | " + menu[i].nombre + " -S/ " + menu[i].precio.toFixed(2) + "\n";
+        for (let i = 0; i < menu.length; i++) {
+            menuTexto += "ID: " + menu[i].id + " | " + menu[i].nombre + " - S/ " + menu[i].precio.toFixed(2) + "\n";
         }
         menuTexto += "\nIngrese el ID del producto que desea agregar:";
 
         let inputId = prompt(menuTexto);
 
-        if(inputId !== null && inputId.trim() !== "") {
+        if (inputId !== null && inputId.trim() !== "") {
             let idSeleccionado = Number(inputId.trim());
             let productoEncontrado = null;
 
-            for (let i = 0; i < menu.length; i++){
+            for (let i = 0; i < menu.length; i++) {
                 if (menu[i].id === idSeleccionado) {
                     productoEncontrado = menu[i];
                     break;
                 }
             }
 
-            if ( productoEncontrado !== null) {
+            if (productoEncontrado !== null) {
                 let inputCantidad = prompt("Ingresa la cantidad para " + productoEncontrado.nombre + " :");
 
                 if (inputCantidad !== null && inputCantidad.trim() !== "") {
@@ -147,9 +147,9 @@ function procesarCarrito(menu) {
                             subtotalItem: subtotalItem
                         });
 
-                        alert("¡Producto agregar con éxito!");
+                        alert("¡Producto agregado con éxito!");
                     } else {
-                        alert("ERROR: Ingrese un valor númerico válido mayor a 0.");
+                        alert("ERROR: Ingrese un valor numérico válido mayor a 0.");
                     }
                 }
             } else {
@@ -157,19 +157,18 @@ function procesarCarrito(menu) {
             }
         }
 
+        continuarComprando = confirm("¿Desea agregar otro producto al carrito?");
+    } while (continuarComprando);
 
-        continuarComprando  = confirm("¿Desea agregar otro producto al carrito?");
-    }while (continuarComprando);
-
-    let subtotal = Math.round((subtotalAcumulado + Number.EPSILON) * 100) /100;
-    let igv = Math.round(((subtotal * 0.18) + Number.EPSILON) * 100)/100;
+    let subtotal = Math.round((subtotalAcumulado + Number.EPSILON) * 100) / 100;
+    let igv = Math.round(((subtotal * 0.18) + Number.EPSILON) * 100) / 100;
 
     let descuento = 0;
-    if(cantidadTotalArticulos % 2 === 0 && cantidadTotalArticulos > 0 ){
+    if (cantidadTotalArticulos % 2 === 0 && cantidadTotalArticulos > 0) {
         descuento = 5.00;
     }
 
-    let totalFijo = Math.round(((subtotal + igv - descuento) + Number.EPSILON) * 100 ) /100;
+    let totalFijo = Math.round(((subtotal + igv - descuento) + Number.EPSILON) * 100) / 100;
 
     return {
         items: items,
@@ -194,7 +193,7 @@ const procesarEstadisticas = (carritoItems) => {
     }, 0);
 
     const destacados = carritoItems.filter((item) => {
-        return item.subtotalItem > 30;
+        return item.subtotalItem >= 30;
     });
 
     let destacadosTexto = "";
@@ -216,24 +215,8 @@ const procesarEstadisticas = (carritoItems) => {
 function iniciarSistema() {
     try {
         const cliente = registrarCliente();
-
-        const financiero = typeof procesarCarrito === 'function' 
-            ? procesarCarrito(menuPrincipal)
-            : {
-                items: [{ producto: "1/4 de Pollo a la Brasa", cantidad: 2, precioUnitario: 22, subtotalItem: 44 }],
-                subtotal: 44.00,
-                igv: 7.92,
-                descuento: 0.00,
-                totalFijo: 51.92
-            };
-
-        const estadisticas = typeof procesarEstadisticas === 'function'
-            ? procesarEstadisticas(financiero.items)
-            : {
-                reciboEstructurado: ["2x 1/4 de Pollo a la Brasa (S/ 22.00) = S/ 44.00"],
-                cantidadCalculada: 2,
-                destacados: "1/4 de Pollo a la Brasa"
-            };
+        const financiero = procesarCarrito(menuPrincipal);
+        const estadisticas = procesarEstadisticas(financiero.items);
 
         let itemsHTML = "";
         estadisticas.reciboEstructurado.forEach(linea => {
@@ -254,7 +237,7 @@ function iniciarSistema() {
                 <ul>
                     ${itemsHTML}
                 </ul>
-                <p><strong>Productos Destacados (> S/ 30):</strong> ${estadisticas.destacados || "Ninguno"}</p>
+                <p><strong>Productos Destacados (>= S/ 30):</strong> ${estadisticas.destacados || "Ninguno"}</p>
                 <hr style="border: 1px solid #ddd;">
                 <p><strong>Subtotal:</strong> S/ ${financiero.subtotal.toFixed(2)}</p>
                 <p><strong>IGV (18%):</strong> S/ ${financiero.igv.toFixed(2)}</p>
@@ -279,4 +262,5 @@ function iniciarSistema() {
         `;
     }
 }
+
 window.onload = iniciarSistema;
